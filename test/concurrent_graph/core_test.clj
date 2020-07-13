@@ -37,3 +37,13 @@
       (add-vertex graph :B)
       (add-vertex graph :C)
       (is (true? (= (count graph) 3))))))
+
+(deftest indexed-graph
+  (testing "graph should be indexed"
+    (let [graph (concurrent-graph)]
+      (add-vertex graph :A)
+      (add-vertex graph :B)
+      (add-vertex graph :C)
+      (add-edge graph :C :A)
+      (add-edge graph :C :B)
+      (is (true? (= (nth graph 2) [:C #{:A :B}]))))))
