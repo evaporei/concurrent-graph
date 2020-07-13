@@ -21,3 +21,11 @@
       (add-vertex graph :B)
       (is (true? (= (add-edge graph :A :B) {:A #{:B} :B #{:A}})))
       (is (true? (= (:graph graph) {:A #{:B} :B #{:A}}))))))
+
+(deftest seqable-graph
+  (testing "graph should be seqable"
+    (let [graph (concurrent-graph)]
+      (add-vertex graph :A)
+      (add-vertex graph :B)
+      (add-edge graph :A :B)
+      (is (true? (= (seq graph) '([:A #{:B}] [:B #{:A}])))))))

@@ -1,11 +1,14 @@
 (ns concurrent-graph.core
-  (:import [clojure.lang ILookup]))
+  (:import [clojure.lang ILookup Seqable]))
 
 (defprotocol Graph
   (add-vertex [this vertex])
   (add-edge [this v1 v2]))
 
 (deftype ConcurrentGraph [graph]
+  Seqable
+  (seq [_] (seq @graph))
+
   Graph
   (add-vertex [_ vertex]
     (swap! graph assoc vertex #{}))
