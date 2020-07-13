@@ -2,3 +2,6 @@
 
 (defn concurrent-graph []
   (atom {}))
+
+(defn add-vertex [graph vertex]
+  (swap! graph assoc vertex #{}))
