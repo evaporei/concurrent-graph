@@ -29,3 +29,11 @@
       (add-vertex graph :B)
       (add-edge graph :A :B)
       (is (true? (= (seq graph) '([:A #{:B}] [:B #{:A}])))))))
+
+(deftest counted-graph
+  (testing "graph should be counted"
+    (let [graph (concurrent-graph)]
+      (add-vertex graph :A)
+      (add-vertex graph :B)
+      (add-vertex graph :C)
+      (is (true? (= (count graph) 3))))))

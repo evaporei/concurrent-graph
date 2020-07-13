@@ -1,5 +1,5 @@
 (ns concurrent-graph.core
-  (:import [clojure.lang ILookup Seqable]))
+  (:import [clojure.lang Counted ILookup Seqable]))
 
 (defprotocol Graph
   (add-vertex [this vertex])
@@ -8,6 +8,9 @@
 (deftype ConcurrentGraph [graph]
   Seqable
   (seq [_] (seq @graph))
+
+  Counted
+  (count [_] (count @graph))
 
   Graph
   (add-vertex [_ vertex]
