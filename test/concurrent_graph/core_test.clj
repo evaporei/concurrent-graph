@@ -13,3 +13,11 @@
     (let [graph (concurrent-graph)]
       (is (true? (= (add-vertex graph :A) {:A #{}})))
       (is (true? (= @graph {:A #{}}))))))
+
+(deftest adds-edge-to-graph
+  (testing "adds edge to graph"
+    (let [graph (concurrent-graph)]
+      (add-vertex graph :A)
+      (add-vertex graph :B)
+      (is (true? (= (add-edge graph :A :B) {:A #{:B} :B #{:A}})))
+      (is (true? (= @graph {:A #{:B} :B #{:A}}))))))
