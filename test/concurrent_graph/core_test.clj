@@ -47,3 +47,21 @@
       (add-edge graph :C :A)
       (add-edge graph :C :B)
       (is (true? (= (nth graph 2) [:C #{:A :B}]))))))
+
+(deftest dfs-graph
+  (testing "depth first search"
+    (let [graph (concurrent-graph)
+          search-order (atom [])
+          peek-fn (fn [vertex] (swap! search-order conj vertex))]
+      (doseq [vertex [:A :B :C :D :E :F]]
+        (add-vertex graph vertex))
+      (add-edge graph :A :B)
+      (add-edge graph :A :D)
+      (add-edge graph :A :E)
+      (add-edge graph :B :C)
+      (add-edge graph :D :E)
+      (add-edge graph :E :F)
+      (add-edge graph :E :C)
+      (add-edge graph :C :F)
+      (dfs graph :A peek-fn)
+      (is (true? (= search-order [:A :B :C :E :D :F]))))))
